@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent OS — Autonomous AI Workspace</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+
+<body>
+    <div class="bg-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <div class="app-shell">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-glow"><span>🧠</span></div>
+                <div>
+                    <h1>Agent OS</h1><span class="version-badge">v3.0</span>
+                </div>
+            </div>
+            <nav>
+                <div class="nav-item active" data-view="chat"><span>💬</span> Chat</div>
+                <div class="nav-item" data-view="workspace"><span>📁</span> Workspace</div>
+                <div class="nav-item" data-view="settings"><span>⚙️</span> Settings</div>
+            </nav>
+            <div class="sidebar-section">
+                <label>Active Model</label>
+                <select id="model-select"></select>
+            </div>
+            <div class="sidebar-section">
+                <button class="btn-reset" id="reset-btn">🔄 New Session</button>
+            </div>
+            <div class="status-bar">
+                <div class="status-dot-row"><span class="blink"></span> <span id="status-text">Online</span></div>
+                <span class="tool-badge">🔧 9 tools</span>
+            </div>
+        </aside>
+
+        <!-- MAIN SPLIT -->
+        <div class="main-split">
+            <!-- LEFT PANEL -->
+            <div class="left-panel">
+                <!-- CHAT -->
+                <div id="view-chat" class="view active-view">
+                    <div class="chat-scroll" id="chat-scroll">
+                        <div id="chat-messages">
+                            <div class="welcome-card">
+                                <div class="welcome-icon">🧠</div>
+                                <h2>Agent OS</h2>
+                                <p>I create real, working apps. Attach files, take photos, or just ask me to build
+                                    anything.</p>
+                                <div class="quick-actions">
+                                    <button class="quick-btn"
+                                        onclick="quickAction('Create a beautiful todo list app with add, delete, and mark complete features. Save it as todo.html')">📝
+                                        Todo App</button>
+                                    <button class="quick-btn"
+                                        onclick="quickAction('Create a calculator app with a modern dark UI. Save it as calculator.html')">🔢
+                                        Calculator</button>
+                                    <button class="quick-btn"
+                                        onclick="quickAction('Create a weather dashboard with beautiful UI and sample data. Save as weather.html')">🌤️
+                                        Weather</button>
+                                    <button class="quick-btn"
+                                        onclick="quickAction('Write a Python script that generates 5 random passwords and run it')">🐍
+                                        Python</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Attachment preview strip -->
+                    <div id="attachment-strip" class="attachment-strip hidden"></div>
+
+                    <!-- Input area with file/camera buttons -->
+                    <div class="input-area">
+                        <div class="input-wrapper">
+                            <div class="input-actions-left">
+                                <button class="input-icon-btn" id="attach-file-btn" title="Attach file">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path
+                                            d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+                                    </svg>
+                                </button>
+                                <button class="input-icon-btn" id="attach-photo-btn" title="Upload photo">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                                        <circle cx="8.5" cy="8.5" r="1.5" />
+                                        <path d="M21 15l-5-5L5 21" />
+                                    </svg>
+                                </button>
+                                <button class="input-icon-btn" id="camera-btn" title="Camera capture">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path
+                                            d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                                        <circle cx="12" cy="13" r="4" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <textarea id="user-input" placeholder="Create a todo app, attach files, take a photo..."
+                                rows="1"></textarea>
+                            <button id="send-btn">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5">
+                                    <path d="M22 2L11 13" />
+                                    <path d="M22 2L15 22L11 13L2 9L22 2Z" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div id="thinking-indicator" class="thinking-bar hidden">
+                            <div class="thinking-progress"></div>
+                            <span>Agent is working...</span>
+                        </div>
+                    </div>
+
+                    <!-- Hidden inputs -->
+                    <input type="file" id="file-input" multiple hidden>
+                    <input type="file" id="photo-input" accept="image/*" hidden>
+                </div>
+
+                <!-- WORKSPACE -->
+                <div id="view-workspace" class="view">
+                    <div class="view-header">
+                        <h3>📁 Workspace</h3><button class="btn-action" id="refresh-ws">🔄 Refresh</button>
+                    </div>
+                    <div id="ws-file-list" class="file-list">
+                        <div class="empty-state"><span>📂</span>
+                            <p>Files created by the agent appear here.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SETTINGS -->
+                <div id="view-settings" class="view">
+                    <div class="view-header">
+                        <h3>⚙️ API Keys & Models</h3>
+                    </div>
+                    <div class="settings-body">
+                        <div class="provider-section">
+                            <!-- OpenRouter -->
+                            <div class="provider-card">
+                                <div class="provider-header">
+                                    <span class="provider-icon">🌐</span>
+                                    <div class="provider-info">
+                                        <h4>OpenRouter</h4>
+                                        <p>Access 100+ models with one key</p>
+                                    </div>
+                                    <span class="key-status" id="status-openrouter">●</span>
+                                </div>
+                                <div class="input-row">
+                                    <input type="password" id="key-openrouter" placeholder="sk-or-v1-...">
+                                    <button class="btn-save" onclick="saveProviderKey('openrouter')">Save</button>
+                                </div>
+                            </div>
+                            <!-- OpenAI -->
+                            <div class="provider-card">
+                                <div class="provider-header">
+                                    <span class="provider-icon">🤖</span>
+                                    <div class="provider-info">
+                                        <h4>OpenAI</h4>
+                                        <p>GPT-4o, GPT-4 Turbo, GPT-3.5</p>
+                                    </div>
+                                    <span class="key-status" id="status-openai">●</span>
+                                </div>
+                                <div class="input-row">
+                                    <input type="password" id="key-openai" placeholder="sk-...">
+                                    <button class="btn-save" onclick="saveProviderKey('openai')">Save</button>
+                                </div>
+                            </div>
+                            <!-- Gemini -->
+                            <div class="provider-card">
+                                <div class="provider-header">
+                                    <span class="provider-icon">💎</span>
+                                    <div class="provider-info">
+                                        <h4>Google Gemini</h4>
+                                        <p>Gemini 2.0 Flash, 1.5 Pro</p>
+                                    </div>
+                                    <span class="key-status" id="status-gemini">●</span>
+                                </div>
+                                <div class="input-row">
+                                    <input type="password" id="key-gemini" placeholder="AI...">
+                                    <button class="btn-save" onclick="saveProviderKey('gemini')">Save</button>
+                                </div>
+                            </div>
+                            <!-- Anthropic -->
+                            <div class="provider-card">
+                                <div class="provider-header">
+                                    <span class="provider-icon">🧬</span>
+                                    <div class="provider-info">
+                                        <h4>Anthropic</h4>
+                                        <p>Claude 3.5 Sonnet, Opus</p>
+                                    </div>
+                                    <span class="key-status" id="status-anthropic">●</span>
+                                </div>
+                                <div class="input-row">
+                                    <input type="password" id="key-anthropic" placeholder="sk-ant-...">
+                                    <button class="btn-save" onclick="saveProviderKey('anthropic')">Save</button>
+                                </div>
+                            </div>
+                            <!-- Groq -->
+                            <div class="provider-card">
+                                <div class="provider-header">
+                                    <span class="provider-icon">⚡</span>
+                                    <div class="provider-info">
+                                        <h4>Groq</h4>
+                                        <p>Ultra-fast Llama 3.1, Mixtral</p>
+                                    </div>
+                                    <span class="key-status" id="status-groq">●</span>
+                                </div>
+                                <div class="input-row">
+                                    <input type="password" id="key-groq" placeholder="gsk_...">
+                                    <button class="btn-save" onclick="saveProviderKey('groq')">Save</button>
+                                </div>
+                            </div>
+                            <!-- Ollama -->
+                            <div class="provider-card">
+                                <div class="provider-header">
+                                    <span class="provider-icon">🏠</span>
+                                    <div class="provider-info">
+                                        <h4>Ollama (Local)</h4>
+                                        <p>Run models locally — no API key</p>
+                                    </div>
+                                    <span class="key-status connected" id="status-ollama">●</span>
+                                </div>
+                                <p class="provider-note">Ollama on localhost:11434</p>
+                            </div>
+                            <!-- LM Studio -->
+                            <div class="provider-card">
+                                <div class="provider-header">
+                                    <span class="provider-icon">🖥️</span>
+                                    <div class="provider-info">
+                                        <h4>LM Studio (Local)</h4>
+                                        <p>Run GGUF models locally — no API key</p>
+                                    </div>
+                                    <span class="key-status connected" id="status-lmstudio">●</span>
+                                </div>
+                                <p class="provider-note">LM Studio on localhost:1234</p>
+                            </div>
+                        </div>
+
+                        <!-- Custom Model -->
+                        <div class="setting-group">
+                            <label>➕ Add Custom Model</label>
+                            <div class="input-row">
+                                <select id="custom-provider">
+                                    <option value="openrouter">OpenRouter</option>
+                                    <option value="openai">OpenAI</option>
+                                    <option value="gemini">Gemini</option>
+                                    <option value="anthropic">Anthropic</option>
+                                    <option value="groq">Groq</option>
+                                    <option value="ollama">Ollama</option>
+                                    <option value="lmstudio">LM Studio</option>
+                                </select>
+                                <input type="text" id="custom-model-id" placeholder="model-id">
+                                <input type="text" id="custom-model-name" placeholder="Display Name">
+                                <button class="btn-action" id="add-model-btn">Add</button>
+                            </div>
+                        </div>
+
+                        <!-- System Prompt -->
+                        <div class="setting-group">
+                            <label>System Prompt Override</label>
+                            <textarea id="system-prompt-input" rows="3"
+                                placeholder="Leave empty for default..."></textarea>
+                            <button class="btn-action" id="save-prompt-btn">Save Prompt</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: Preview -->
+            <div class="right-panel" id="right-panel">
+                <div class="preview-header">
+                    <div class="preview-tabs">
+                        <button class="preview-tab active" data-tab="preview">▶ Preview</button>
+                        <button class="preview-tab" data-tab="code">📄 Code</button>
+                        <button class="preview-tab" data-tab="output">🖥 Output</button>
+                    </div>
+                    <div class="preview-actions">
+                        <span class="preview-filename" id="preview-filename">No file</span>
+                        <button class="btn-icon" id="open-new-tab" title="Open in new tab">↗</button>
+                    </div>
+                </div>
+                <div id="tab-preview" class="tab-content active-tab">
+                    <div class="preview-empty" id="preview-empty">
+                        <span>✨</span>
+                        <h3>Live Preview</h3>
+                        <p>Ask me to create an app — it will appear here, live and interactive.</p>
+                    </div>
+                    <iframe id="preview-iframe" class="preview-iframe hidden"
+                        sandbox="allow-scripts allow-forms allow-modals"></iframe>
+                </div>
+                <div id="tab-code" class="tab-content">
+                    <pre id="code-viewer" class="code-viewer"><code>// Code appears here</code></pre>
+                </div>
+                <div id="tab-output" class="tab-content">
+                    <pre id="output-viewer" class="output-viewer">Output will appear here.</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Camera Modal -->
+    <div id="camera-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📸 Camera Capture</h3>
+                <button class="modal-close" id="camera-close">✕</button>
+            </div>
+            <video id="camera-video" autoplay playsinline></video>
+            <canvas id="camera-canvas" hidden></canvas>
+            <div class="modal-actions">
+                <button class="btn-action" id="capture-btn">📸 Capture</button>
+                <button class="btn-action" id="switch-camera-btn">🔄 Switch</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
