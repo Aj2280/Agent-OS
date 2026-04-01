@@ -9,9 +9,28 @@
 
 **A Claude Workspace-like autonomous AI agent that creates real apps, runs code, and shows live previews — all from your browser.**
 
-[Features](#-features) • [Quick Start](#-quick-start) • [Screenshots](#-screenshots) • [Providers](#-supported-providers) • [Architecture](#-architecture)
+[Features](#-features) • [Screenshots](#-screenshots) • [Quick Start](#-quick-start) • [Providers](#-supported-providers) • [Architecture](#-architecture)
 
 </div>
+
+---
+
+## 📸 Screenshots
+
+### 💬 Chat + Live Preview Workspace
+> Split-pane layout: chat on the left, live app preview on the right. Attach files, take photos, or use the camera — all from the input bar.
+
+![Chat Dashboard](screenshots/dashboard-chat.png)
+
+### ⚙️ Multi-Provider Settings
+> Manage API keys for 7 AI providers. Green dot = connected, red dot = needs key. Add any custom model ID.
+
+![Settings Panel](screenshots/dashboard-settings.png)
+
+### 🖥️ Local Models & Custom Configuration
+> Ollama and LM Studio for local models (no API key needed). Add custom models from any provider. Override the system prompt.
+
+![Settings Bottom](screenshots/dashboard-settings-bottom.png)
 
 ---
 
@@ -71,19 +90,6 @@ http://localhost:8000
 ```
 
 That's it! 🎉
-
----
-
-## 📸 Screenshots
-
-### Chat + Live Preview
-> Ask the agent to create an app → it writes the code → the app appears live in the preview panel
-
-### Settings — 7 Providers
-> Add API keys for OpenRouter, OpenAI, Gemini, Anthropic, Groq, Ollama, or LM Studio
-
-### Workspace File Browser
-> Browse all files created by the agent in the workspace directory
 
 ---
 
