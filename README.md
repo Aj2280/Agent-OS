@@ -6,6 +6,7 @@
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+[![Sponsor](https://img.shields.io/badge/Sponsor-💖-ea4aaa?style=for-the-badge&logo=githubsponsors&logoColor=white)](https://github.com/sponsors/Aj2280)
 
 **A Claude Workspace-like autonomous AI agent that creates real apps, runs code, and shows live previews — all from your browser.**
 
@@ -186,6 +187,22 @@ Contributions are welcome! Feel free to:
 - Open issues for bugs or feature requests
 - Submit pull requests with improvements
 - Add new tools or providers
+
+---
+
+## 💖 Support & Sponsors
+
+Agent-OS is free and open-source. Supporting this project helps fund API benchmarking tokens across all 7 providers and accelerates development of new features (like team workspaces and browser agents).
+
+<div align="center">
+
+[![Sponsor Aj2280](https://img.shields.io/badge/Sponsor_on_GitHub-💖_Support_Agent_OS-ea4aaa?style=for-the-badge&logo=githubsponsors&logoColor=white)](https://github.com/sponsors/Aj2280)
+
+</div>
+
+- **☕ $5/mo:** Coffee & token credits — Supporter badge & shoutout.
+- **⚡ $15/mo:** Power User — Early access to upcoming agent tools & priority bug triage.
+- **🛠️ $50+/mo:** Backers & Sponsors — Your logo / link featured here & 1-on-1 architecture advisory.
 
 ---
 
