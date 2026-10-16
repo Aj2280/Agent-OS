@@ -100,7 +100,7 @@ That's it! 🎉
 |----------|--------|:---:|
 | 🌐 **OpenRouter** | 100+ models (GPT-4o, Claude, Llama, etc.) | ✅ |
 | 🤖 **OpenAI** | GPT-4o, GPT-4 Turbo, GPT-3.5 | ✅ |
-| 💎 **Google Gemini** | Gemini 2.0 Flash, 1.5 Pro | ✅ |
+| 💎 **Google Gemini** | Gemini 2.0 Flash, 2.5 | ✅ |
 | 🧬 **Anthropic** | Claude 3.5 Sonnet, Claude 3 Opus | ✅ |
 | ⚡ **Groq** | Llama 3.1, Mixtral (ultra-fast) | ✅ |
 | 🏠 **Ollama** | Any local model (Llama, Mistral, etc.) | ❌ |
